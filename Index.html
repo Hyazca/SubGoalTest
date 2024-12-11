@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Subscriber Count</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        header {
+            background-color: #6200ea;
+            color: white;
+            padding: 20px 0;
+        }
+        header h1 {
+            margin: 0;
+        }
+        .content {
+            margin: 20px;
+        }
+        .goal-tracker {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 25px;
+            height: 25px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress-bar-fill {
+            background: #6200ea;
+            height: 100%;
+            width: 0%;
+            border-radius: 25px;
+            transition: width 0.5s;
+        }
+        .subscriber-count {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        .goal-message {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        a {
+            color: #6200ea;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Real-Time Subscriber Tracker</h1>
+        <p>Hyazca Hakari Channel</p>
+    </header>
+    <div class="content">
+        <div class="goal-tracker">
+            <p class="subscriber-count">Current Subscribers: <span id="subscriber-count">Loading...</span></p>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" id="progress-bar-fill"></div>
+            </div>
+            <p class="goal-message">Goal: 500 Subscribers</p>
+            <p>Support Hyazca Hakari by subscribing! Visit the channel <a href="https://www.youtube.com/@HyazcaHakari" target="_blank">here</a>.</p>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = 'YOUR_API_KEY'; // Replace with your API key
+        const CHANNEL_ID = 'UCz5WRNLwWr_5Z8TGoIVqogg'; // Replace with your channel ID
+        const GOAL_SUBSCRIBERS = 500;
+
+        async function fetchSubscribers() {
+            try {
+                const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`);
+                const data = await response.json();
+                const subscriberCount = data.items[0].statistics.subscriberCount;
+
+                // Update subscriber count
+                document.getElementById('subscriber-count').innerText = subscriberCount;
+
+                // Update progress bar
+                const progress = (subscriberCount / GOAL_SUBSCRIBERS) * 100;
+                document.getElementById('progress-bar-fill').style.width = `${Math.min(progress, 100)}%`;
+            } catch (error) {
+                console.error('Error fetching subscriber count:', error);
+                document.getElementById('subscriber-count').innerText = 'Error';
+            }
+        }
+
+        // Fetch subscriber count every 10 seconds
+        fetchSubscribers();
+        setInterval(fetchSubscribers, 10000);
+    </script>
+</body>
+</html>
