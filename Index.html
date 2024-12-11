@@ -104,3 +104,17 @@
     </script>
 </body>
 </html>
+<script>
+  async function getSubscriberCount(channelId) {
+    const res = await fetch(`/api/youtube?channelId=${channelId}`);
+    const data = await res.json();
+    if (data.subscriberCount) {
+      console.log(`Subscriber count: ${data.subscriberCount}`);
+    } else {
+      console.error('Channel not found');
+    }
+  }
+
+  getSubscriberCount('HyazcaHakari'); // Panggil dengan ID channel Anda
+</script>
+
