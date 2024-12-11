@@ -77,12 +77,12 @@
 
     <script>
         const API_KEY = 'AIzaSyDq0kLnBr8wLrQSD-qkow4d13vyqjxtrcs'; // Replace with your API key
-        const CHANNEL_ID = 'UCz5WRNLwWr_5Z8TGoIVqogg'; // Replace with your channel ID
+        const CHANNEL_ID = 'HyazcaHakari'; // Replace with your channel ID
         const GOAL_SUBSCRIBERS = 500;
 
         async function fetchSubscribers() {
             try {
-                const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`);
+                const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${HyazcaHakari}&key=${AIzaSyDq0kLnBr8wLrQSD-qkow4d13vyqjxtrcs}`);
                 const data = await response.json();
                 const subscriberCount = data.items[0].statistics.subscriberCount;
 
